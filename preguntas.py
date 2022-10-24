@@ -160,7 +160,29 @@ def pregunta_05():
     ]
 
     """
-    return
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_a_list = []
+    column_b_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_a_list.append(values_tmp[0])
+        column_b_list.append(int(values_tmp[1]))
+
+    columns_ab_list = list(zip(column_a_list,column_b_list))
+
+    max_dict = {}
+    min_dict = {}
+    result_list = []
+    for col_a, col_b in columns_ab_list:
+        max_dict[col_a] = col_b if col_a not in max_dict else max_dict[col_a] if max_dict[col_a] > col_b else col_b
+        min_dict[col_a] = col_b if col_a not in min_dict else min_dict[col_a] if min_dict[col_a] < col_b else col_b
+
+    result_list = list(zip(max_dict.keys(), max_dict.values(), min_dict.values()))
+    result_list.sort(key=lambda i:i[0])
+    
+    return result_list
 
 
 def pregunta_06():
