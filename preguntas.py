@@ -207,7 +207,32 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_e_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        [column_e_list.append(x) for x in values_tmp[4].split(",")]
+
+    column_e_keys = []
+    column_e_values = []
+    [[column_e_keys.append(x), column_e_values.append(int(y))] for s in column_e_list for (x, y) in [s.split(":")]]
+
+    column_e_list = list(zip(column_e_keys, column_e_values))
+
+    max_dict = {}
+    min_dict = {}
+    result_list = []
+
+    for key, value in column_e_list:
+        max_dict[key] = value if key not in max_dict else max_dict[key] if max_dict[key] > value else value
+        min_dict[key] = value if key not in min_dict else min_dict[key] if min_dict[key] < value else value
+
+    result_list = list(zip(min_dict.keys(), min_dict.values(), max_dict.values()))
+    result_list.sort(key=lambda i:i[0])
+
+    return result_list
 
 
 def pregunta_07():
