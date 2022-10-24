@@ -82,7 +82,30 @@ def pregunta_03():
     ]
 
     """
-    return
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_a_list = []
+    column_b_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_a_list.append(values_tmp[0])
+        column_b_list.append(int(values_tmp[1]))
+
+    columns_ab_list = list(zip(column_a_list,column_b_list))
+
+    sums_dict = {}
+    result_list = []
+    for col_a, col_b in columns_ab_list:
+        sums_dict[col_a] = col_b if col_a not in sums_dict else sums_dict[col_a] + col_b
+
+
+    #result_list = [(k, v) for k, v in sums_dict.items()]
+    #result_list = list(sums_dict.items())
+    result_list = list(zip(sums_dict.keys(), sums_dict.values()))
+    result_list.sort(key=lambda i:i[0])
+
+    return result_list
 
 
 def pregunta_04():
