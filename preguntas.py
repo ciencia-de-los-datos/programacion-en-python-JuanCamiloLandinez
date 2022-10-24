@@ -99,9 +99,6 @@ def pregunta_03():
     for col_a, col_b in columns_ab_list:
         sums_dict[col_a] = col_b if col_a not in sums_dict else sums_dict[col_a] + col_b
 
-
-    #result_list = [(k, v) for k, v in sums_dict.items()]
-    #result_list = list(sums_dict.items())
     result_list = list(zip(sums_dict.keys(), sums_dict.values()))
     result_list.sort(key=lambda i:i[0])
 
@@ -130,7 +127,22 @@ def pregunta_04():
     ]
 
     """
-    return
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_c_months_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_c_months_list.append(values_tmp[2][5:7])
+
+    column_c_distinct = list(dict.fromkeys(column_c_months_list))
+    column_c_distinct.sort()
+    values_occurence_list = []
+
+    for column_c_value in column_c_distinct:
+        values_occurence_list.append((column_c_value, column_c_months_list.count(column_c_value)))
+    
+    return values_occurence_list
 
 
 def pregunta_05():
