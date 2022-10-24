@@ -256,7 +256,30 @@ def pregunta_07():
     ]
 
     """
-    return
+    file = open("data.csv", "r")
+
+    data = []
+    column_b_distinct = []
+    for row in csv.reader(file, delimiter="\t"):
+        data.append([row[0], row[1]])
+        column_b_distinct.append(row[1])
+
+    column_b_distinct = list(dict.fromkeys([row[1] for row in data]))
+    column_b_distinct.sort()
+
+    return_list = []
+    letter_list = []
+
+    for x in column_b_distinct:
+        for y in data:
+            if x == y[1]:
+                letter_list.append(y[0])
+        
+        tupla = (int(x),letter_list.copy())
+        return_list.append(tupla)
+        letter_list.clear()
+        
+    return return_list
 
 
 def pregunta_08():
@@ -281,7 +304,7 @@ def pregunta_08():
     ]
 
     """
-    return
+    
 
 
 def pregunta_09():
