@@ -50,7 +50,22 @@ def pregunta_02():
     ]
 
     """
-    return
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_a_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_a_list.append(values_tmp[0])
+
+    column_a_distinct_list = list(dict.fromkeys(column_a_list))
+    column_a_distinct_list.sort()
+    values_occurence_list = []
+
+    for column_a_value in column_a_distinct_list:
+        values_occurence_list.append((column_a_value, column_a_list.count(column_a_value)))
+
+    return values_occurence_list
 
 
 def pregunta_03():
@@ -68,7 +83,31 @@ def pregunta_03():
     ]
 
     """
-    return
+    
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_a_list = []
+    column_b_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_a_list.append(values_tmp[0])
+        column_b_list.append(int(values_tmp[1]))
+
+    columns_ab_list = list(zip(column_a_list,column_b_list))
+
+    sums_dict = {}
+    result_list = []
+    for col_a, col_b in columns_ab_list:
+        sums_dict[col_a] = col_b if col_a not in sums_dict else sums_dict[col_a] + col_b
+
+
+    #result_list = [(k, v) for k, v in sums_dict.items()]
+    #result_list = list(sums_dict.items())
+    result_list = list(zip(sums_dict.keys(), sums_dict.values()))
+    result_list.sort(key=lambda i:i[0])
+
+    return result_list
 
 
 def pregunta_04():
@@ -93,7 +132,22 @@ def pregunta_04():
     ]
 
     """
-    return
+     with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_c_months_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_c_months_list.append(values_tmp[2][5:7])
+
+    column_c_distinct = list(dict.fromkeys(column_c_months_list))
+    column_c_distinct.sort()
+    values_occurence_list = []
+
+    for column_c_value in column_c_distinct:
+        values_occurence_list.append((column_c_value, column_c_months_list.count(column_c_value)))
+    
+    return values_occurence_list
 
 
 def pregunta_05():
@@ -111,7 +165,29 @@ def pregunta_05():
     ]
 
     """
-    return
+     with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_a_list = []
+    column_b_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        column_a_list.append(values_tmp[0])
+        column_b_list.append(int(values_tmp[1]))
+
+    columns_ab_list = list(zip(column_a_list,column_b_list))
+
+    max_dict = {}
+    min_dict = {}
+    result_list = []
+    for col_a, col_b in columns_ab_list:
+        max_dict[col_a] = col_b if col_a not in max_dict else max_dict[col_a] if max_dict[col_a] > col_b else col_b
+        min_dict[col_a] = col_b if col_a not in min_dict else min_dict[col_a] if min_dict[col_a] < col_b else col_b
+
+    result_list = list(zip(max_dict.keys(), max_dict.values(), min_dict.values()))
+    result_list.sort(key=lambda i:i[0])
+    
+    return result_list
 
 
 def pregunta_06():
@@ -136,7 +212,32 @@ def pregunta_06():
     ]
 
     """
-    return
+    with open("data.csv", "r") as file:
+        list_data = file.readlines()
+
+    column_e_list = []
+    for values in list_data:
+        values_tmp = values.split()
+        [column_e_list.append(x) for x in values_tmp[4].split(",")]
+
+    column_e_keys = []
+    column_e_values = []
+    [[column_e_keys.append(x), column_e_values.append(int(y))] for s in column_e_list for (x, y) in [s.split(":")]]
+
+    column_e_list = list(zip(column_e_keys, column_e_values))
+
+    max_dict = {}
+    min_dict = {}
+    result_list = []
+
+    for key, value in column_e_list:
+        max_dict[key] = value if key not in max_dict else max_dict[key] if max_dict[key] > value else value
+        min_dict[key] = value if key not in min_dict else min_dict[key] if min_dict[key] < value else value
+
+    result_list = list(zip(min_dict.keys(), min_dict.values(), max_dict.values()))
+    result_list.sort(key=lambda i:i[0])
+
+    return result_list
 
 
 def pregunta_07():
@@ -160,7 +261,30 @@ def pregunta_07():
     ]
 
     """
-    return
+     file = open("data.csv", "r")
+
+    data = []
+    column_b_distinct = []
+    for row in csv.reader(file, delimiter="\t"):
+        data.append([row[0], row[1]])
+        column_b_distinct.append(row[1])
+
+    column_b_distinct = list(dict.fromkeys([row[1] for row in data]))
+    column_b_distinct.sort()
+
+    return_list = []
+    letter_list = []
+
+    for x in column_b_distinct:
+        for y in data:
+            if x == y[1]:
+                letter_list.append(y[0])
+        
+        tupla = (int(x),letter_list.copy())
+        return_list.append(tupla)
+        letter_list.clear()
+        
+    return return_list
 
 
 def pregunta_08():
@@ -185,7 +309,31 @@ def pregunta_08():
     ]
 
     """
-    return
+     file = open("data.csv", "r")
+
+    data = []
+    column_b_distinct = []
+    for row in csv.reader(file, delimiter="\t"):
+        data.append([row[0], row[1]])
+        column_b_distinct.append(row[1])
+
+    column_b_distinct = list(dict.fromkeys([row[1] for row in data]))
+    column_b_distinct.sort()
+
+    return_list = []
+    letter_list = []
+
+    for x in column_b_distinct:
+        for y in data:
+            if x == y[1] and y[0] not in letter_list:
+                letter_list.append(y[0])
+
+        letter_list.sort()
+        tupla = (int(x),letter_list.copy())
+        return_list.append(tupla)
+        letter_list.clear()
+        
+    return return_list
 
 
 def pregunta_09():
@@ -208,7 +356,22 @@ def pregunta_09():
     }
 
     """
-    return
+     file = open("data.csv", "r")
+
+    data = []
+
+    for row in csv.reader(file, delimiter="\t"):
+        [data.append(x) for x in row[4].split(",")]
+
+
+    column_e_keys = []
+    column_e_values = []
+    [[column_e_keys.append(x), column_e_values.append(int(y))] for s in data for (x, y) in [s.split(":")]]
+
+    column_e_keys.sort()
+    return_list = dict(Counter(column_e_keys))
+   
+    return return_list
 
 
 def pregunta_10():
@@ -229,7 +392,17 @@ def pregunta_10():
 
 
     """
-    return
+    file = open("data.csv", "r")
+
+    data = []
+
+    for row in csv.reader(file, delimiter="\t"):
+        len_col_d = len(row[3].split(","))
+        len_col_e = len(row[4].split(","))
+        tuple = (row[0], len_col_d, len_col_e)
+        data.append(tuple)
+
+    return data
 
 
 def pregunta_11():
@@ -250,7 +423,21 @@ def pregunta_11():
 
 
     """
-    return
+     file = open("data.csv", "r")
+
+    data = []
+
+    for row in csv.reader(file, delimiter="\t"):
+        [data.append([x, int(row[1])]) for x in row[3].split(",")]
+
+    result_dict = {}
+
+    for key, value in data:
+        result_dict[key] = value if key not in result_dict else result_dict[key] + value
+
+    result_dict = OrderedDict(sorted(result_dict.items()))
+
+    return dict(result_dict)
 
 
 def pregunta_12():
@@ -268,4 +455,20 @@ def pregunta_12():
     }
 
     """
-    return
+    
+    file = open("data.csv", "r")
+
+    data = []
+
+    for row in csv.reader(file, delimiter="\t"):
+        [data.append([row[0], int(x.split(":")[1])]) for x in row[4].split(",")]
+
+
+    result_dict = {}
+
+    for key, value in data:
+        result_dict[key] = value if key not in result_dict else result_dict[key] + value
+
+    result_dict = OrderedDict(sorted(result_dict.items()))
+
+    return dict(result_dict)
